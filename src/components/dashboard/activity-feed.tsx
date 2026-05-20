@@ -19,7 +19,7 @@ export default function ActivityFeed({ transactions }: ActivityFeedProps) {
     <section className="rounded-lg border bg-white/75 p-5 shadow-sm dark:bg-slate-950/60">
       <div>
         <h2 className="text-xl font-semibold tracking-tight">Recent Activity</h2>
-        <p className="mt-1 text-sm text-muted-foreground">Latest mock wallet transactions.</p>
+        <p className="mt-1 text-sm text-muted-foreground">Latest wallet transfers.</p>
       </div>
       {transactions.length > 0 ? (
         <ol className="mt-5 space-y-3">
@@ -80,7 +80,7 @@ function formatAsset(transaction: WalletTransaction) {
   }
 
   const amount = asset.amount ? `${formatNumber(asset.amount, 4)} ` : "";
-  const value = asset.valueUsd ? ` · ${formatUsd(asset.valueUsd)}` : "";
+  const value = asset.valueUsd ? ` - ${formatUsd(asset.valueUsd)}` : "";
 
   return `${amount}${asset.symbol ?? "asset"}${value}`;
 }

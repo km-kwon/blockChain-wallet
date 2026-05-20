@@ -7,12 +7,12 @@ export function useFloorPrices(contracts: string[] = []): UseQueryResult<FloorPr
   const contractsKey = [...contracts].sort().join(",");
 
   return useQuery<FloorPriceMap, Error>({
-    queryKey: ["floor-prices", "mock", contractsKey],
+    queryKey: ["floor-prices", contractsKey],
     queryFn: async () => {
-      const floorPrices = getMockWalletData("vitalik.eth").floorPrices;
+      const mockFloorPrices = getMockWalletData("vitalik.eth").floorPrices;
 
       return contracts.reduce<FloorPriceMap>((prices, contractAddress) => {
-        const floorPrice = floorPrices[contractAddress];
+        const floorPrice = mockFloorPrices[contractAddress];
 
         if (floorPrice) {
           prices[contractAddress] = floorPrice;

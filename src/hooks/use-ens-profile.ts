@@ -1,5 +1,5 @@
 import { useQuery, type UseQueryResult } from "@tanstack/react-query";
-import { fetchMockWalletData } from "@/lib/mock-data";
+import { fetchWalletData } from "@/lib/wallet-data";
 import type { EnsProfile, WalletData } from "@/types/wallet";
 import { WALLET_DATA_STALE_TIME_MS, walletDataQueryKey } from "@/hooks/use-wallet-data";
 
@@ -8,7 +8,7 @@ export function useEnsProfile(address?: string): UseQueryResult<EnsProfile, Erro
 
   return useQuery<WalletData, Error, EnsProfile>({
     queryKey: walletDataQueryKey(walletQuery),
-    queryFn: () => fetchMockWalletData(walletQuery),
+    queryFn: () => fetchWalletData(walletQuery),
     enabled: walletQuery.length > 0,
     staleTime: WALLET_DATA_STALE_TIME_MS,
     select: (wallet) => wallet.profile,

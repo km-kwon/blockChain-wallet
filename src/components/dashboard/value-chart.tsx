@@ -11,7 +11,7 @@ export default function ValueChart({ data }: ValueChartProps) {
     <section className="rounded-lg border bg-white/75 p-5 shadow-sm dark:bg-slate-950/60">
       <div>
         <h2 className="text-xl font-semibold tracking-tight">Value History</h2>
-        <p className="mt-1 text-sm text-muted-foreground">Mock 7-day movement across tokens and NFTs.</p>
+        <p className="mt-1 text-sm text-muted-foreground">Seven-day movement across tokens and NFTs.</p>
       </div>
       <div className="mt-5 h-72">
         <ResponsiveContainer height="100%" width="100%">

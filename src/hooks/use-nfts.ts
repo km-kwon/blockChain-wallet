@@ -1,5 +1,5 @@
 import { useQuery, type UseQueryResult } from "@tanstack/react-query";
-import { fetchMockWalletData } from "@/lib/mock-data";
+import { fetchWalletData } from "@/lib/wallet-data";
 import type { NftCollection, NftItem } from "@/types/nft";
 import type { WalletData } from "@/types/wallet";
 import { WALLET_DATA_STALE_TIME_MS, walletDataQueryKey } from "@/hooks/use-wallet-data";
@@ -14,7 +14,7 @@ export function useNfts(address?: string): UseQueryResult<WalletNftsResult, Erro
 
   return useQuery<WalletData, Error, WalletNftsResult>({
     queryKey: walletDataQueryKey(walletQuery),
-    queryFn: () => fetchMockWalletData(walletQuery),
+    queryFn: () => fetchWalletData(walletQuery),
     enabled: walletQuery.length > 0,
     staleTime: WALLET_DATA_STALE_TIME_MS,
     select: (wallet) => ({

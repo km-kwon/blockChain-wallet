@@ -1,15 +1,10 @@
 import { Moon, Sun } from "lucide-react";
-import { useEffect } from "react";
 import { useUiStore } from "@/store/ui-store";
 
 export default function ThemeToggle() {
   const theme = useUiStore((state) => state.theme);
   const toggleTheme = useUiStore((state) => state.toggleTheme);
   const isDark = theme === "dark";
-
-  useEffect(() => {
-    document.documentElement.classList.toggle("dark", isDark);
-  }, [isDark]);
 
   return (
     <button

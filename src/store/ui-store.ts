@@ -9,10 +9,24 @@ type UiState = {
 };
 
 export const useUiStore = create<UiState>((set) => ({
-  theme: "light",
+  theme: getInitialTheme(),
   setTheme: (theme) => set({ theme }),
   toggleTheme: () =>
     set((state) => ({
       theme: state.theme === "light" ? "dark" : "light",
     })),
 }));
+
+function getInitialTheme(): ThemeMode {
+  if (typeof window === "undefined") {
+    return "light";
+  }
+
+  const savedTheme = window.localStorage.getItem("wallet-gallery-theme");
+
+  if (savedTheme === "light" || savedTheme === "dark") {
+    return savedTheme;
+  }
+
+  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+}

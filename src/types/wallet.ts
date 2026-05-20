@@ -61,4 +61,11 @@ export type WalletData = {
   transactions: WalletTransaction[];
   generatedAt: string;
   source: "mock" | "api";
+  notice?: WalletDataNotice;
+};
+
+export type WalletDataNotice = {
+  title: string;
+  message: string;
+  tone: "info" | "warning";
 };

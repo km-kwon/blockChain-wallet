@@ -4,14 +4,22 @@ import NftPanel from "@/components/dashboard/nft-panel";
 import SummaryCards from "@/components/dashboard/summary-cards";
 import TokenPanel from "@/components/dashboard/token-panel";
 import ValueChart from "@/components/dashboard/value-chart";
+import DataSourceNotice from "@/components/shared/data-source-notice";
 import { useWalletData } from "@/hooks/use-wallet-data";
+import { isValidWalletInput, normalizeWalletInput } from "@/lib/format";
+import NotFoundPage from "@/routes/not-found-page";
 import { useParams } from "react-router-dom";
 
 export default function DashboardPage() {
   const { address } = useParams();
-  const walletAddress = address ?? "";
-  const walletQuery = useWalletData(walletAddress);
+  const walletAddress = normalizeWalletInput(address ?? "");
+  const isRouteValid = isValidWalletInput(walletAddress);
+  const walletQuery = useWalletData(walletAddress, { enabled: isRouteValid });
   const wallet = walletQuery.data;
+
+  if (!isRouteValid) {
+    return <NotFoundPage />;
+  }
 
   if (walletQuery.isPending) {
     return (
@@ -49,6 +57,7 @@ export default function DashboardPage() {
     <main className="min-h-screen px-6 py-10">
       <section className="mx-auto max-w-7xl space-y-6">
         <DashboardHeader profile={wallet.profile} routeAddress={walletAddress} />
+        <DataSourceNotice notice={wallet.notice} />
         <SummaryCards summary={wallet.summary} />
         <div className="grid gap-6 xl:grid-cols-2">
           <TokenPanel tokens={wallet.tokens} />
@@ -59,7 +68,7 @@ export default function DashboardPage() {
           <ActivityFeed transactions={wallet.transactions} />
         </div>
         <footer className="border-t py-6 text-center text-sm text-muted-foreground">
-          Powered by Alchemy · Reservoir · CoinGecko
+          Powered by Alchemy / CoinGecko
         </footer>
       </section>
     </main>
